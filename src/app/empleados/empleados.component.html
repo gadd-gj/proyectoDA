@@ -1,0 +1,148 @@
+<app-menu></app-menu>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#action">
+                Nuevo Empleado
+                <img src="../../assets/icon/add.svg" alt="btn add">
+            </button>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <input type="text" name="buscar" id="buscar" class="form-control mt-5" placeholder="Buscar Empledao por ID" (keyup)="resetearBusqueda()" [(ngModel)]="busqueda">
+                <div class="input-group-append">
+                  <button class="btn btn-secondary mt-5" type="button" (click)="buscar()"><img src="../../assets/icon/search.svg" alt="btn search.svg"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-dark mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Departamento</th>
+                        <th scope="col">Opción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-dark" *ngFor="let empleado of empleados">
+                        <th scope="row"> {{empleado.id}} </th>
+                        <td> {{ empleado.nombre }} </td>
+                        <td> {{ empleado.direccion }} </td>
+                        <td> {{ empleado.telefono }} </td>
+                        <td> {{ empleado.departamento }} </td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                    data-target="#action" (click)="modalData( empleado )">
+                                    <img src="../../assets/icon/create.svg" alt="btn create">
+                                </button>
+                                <button type="button" class="btn btn-secondary" (click)="eliminar( empleado )"><img src="../../assets/icon/delete.svg" alt="btn delete"></button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Crear -->
+    <div class="modal fade" id="action" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nuevo Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeAction">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form (ngSubmit) = "actionEmpleado( f )"
+                      #f="ngForm">
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <input type="hidden" name="idEmpleado" value="idEmpleado" [(ngModel)]="empleado.id">
+                                <div class="col-md-12">
+                                    <input type="text" name="nombre" id="nombre" class="form-control"
+                                        placeholder="Nombre de Empleado" [(ngModel)]="empleado.nombre" >
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" name="direccion" id="direccion" class="form-control mt-2"
+                                        placeholder="Dirección" [(ngModel)]="empleado.direccion">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="telefono" id="telefono" class="form-control mt-2"
+                                        placeholder="Teléfono" [(ngModel)]="empleado.telefono">
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="departamento" id="departamento" class="form-control mt-2" [(ngModel)]="empleado.departamento.idDepartamento">
+                                      <option value="" disabled>Departamento</option>
+                                      <option [value]="departamento.idDepartamento" *ngFor="let departamento of departamentos"> {{departamento.nombre}} </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar <img src="../../assets/icon/cancel.svg" alt="btn cancel"></button>
+                        <button type="submit" class="btn btn-primary">Guardar <img src="../../assets/icon/save.svg" alt="btn save"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actualizar -->
+   <!-- <div class="modal fade" id="actualizar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" name="nombre" id="nombre" class="form-control"
+                                        placeholder="Nombre de Empleado">
+                                </div>
+                                <div class="col-md-12">
+                                    <input type="text" name="direccion" id="direccion" class="form-control mt-2"
+                                        placeholder="Dirección">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="telefono" id="telefono" class="form-control mt-2"
+                                        placeholder="Teléfono">
+                                </div>
+                                <div class="col-md-6">
+                                    <select name="departamento" id="departamento" class="form-control mt-2">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>-->
+</div>
