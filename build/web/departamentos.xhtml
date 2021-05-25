@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Departamentos</title>
+    </h:head>
+    <h:body>
+        <h1>Registro de departamentos</h1>
+        <h:button outcome="index.xhtml" value="ir a empleados" />
+        <h:form id="formulario">
+            <div>
+                <label for="id">Id departamento</label>
+                <p:inputText id="id" value="#{indexBeanDepartamentos.departamento.idDepartamento}"/>
+            </div>
+            <div>
+                <label for="nombre">Nombre</label>
+                <p:inputText id="nombre" value="#{indexBeanDepartamentos.departamento.nombre}"/>
+            </div>
+             
+            <p:commandButton value="Agregar" style="margin-right:20px;" action="#{indexBeanDepartamentos.ingresar()}" update="formulario">
+                <f:param name="agregarEmpleado" value="10" />
+            </p:commandButton>
+            <p:commandButton value="Editar" style="margin-right:20px;" action="#{indexBeanDepartamentos.actualizar()}" update="formulario">
+                <f:param name="buscarEmpleado" value="10" />
+            </p:commandButton>
+            <p:commandButton value="Eliminar" style="margin-right:20px;" action="#{indexBeanDepartamentos.eliminar()}" update="formulario">
+                <f:param name="eliminarEmpleado" value="10" />
+            </p:commandButton>
+            <p:commandButton value="Mostar" style="margin-right:20px;" action="#{indexBeanDepartamentos.mostrar()}" update="tabla">
+                <f:param name="mostrarEmpleado" value="10" />
+            </p:commandButton>
+        </h:form>
+        <p:dataTable id="tabla" var="departamentoConsulta" value="#{indexBeanDepartamentos.consulta}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{departamentoConsulta.idDepartamento}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{departamentoConsulta.nombre}"/>
+                </p:column>
+            </p:dataTable>
+    </h:body>
+</html>
+
